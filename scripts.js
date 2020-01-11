@@ -1,6 +1,7 @@
 var canvas;
 var canvasContext;
 var snake = 50;
+var apple = 300;
 
 window.onload = function(){
     this.console.log("Hello World!")
@@ -35,5 +36,5 @@ function drawEverything(){
     canvasContext.fillRect(snake,210, 80, 15);
     //this is the 'apple' figure
     canvasContext.fillStyle = 'white';
-    canvasContext.fillRect(250 ,210, 15, 15);
+    canvasContext.fillRect(apple ,210, 15, 15);
 }
