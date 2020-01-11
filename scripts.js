@@ -17,18 +17,23 @@ window.onload = function(){
 
 function moveEverything(){
     snake = snake + 5;
-    if (snake > 800) {
-    
+    if (snake >= 720) {
+        snake = 720;
+    }
+    if (snake <= 0){
+        snake = 0;
     }
 
 }
 
 function drawEverything(){
+    //next line blanks out screen with black
     canvasContext.fillStyle = 'black';
-    canvasContext.fillRect(0,0,canvas.width,canvas.height);
+    canvasContext.fillRect(0,0,canvas.width,canvas.height, 'black');
+    //this is the 'snake' figure
     canvasContext.fillStyle = 'green';
     canvasContext.fillRect(snake,210, 80, 15);
+    //this is the 'apple' figure
     canvasContext.fillStyle = 'white';
     canvasContext.fillRect(250 ,210, 15, 15);
-
 }
