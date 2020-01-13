@@ -10,13 +10,13 @@ window.onload = function(){
 
     var framesPerSecond = 30;
     setInterval(function(){
-        moveEverything();
+        moveSnake();
         drawEverything();
     }, 1000/framesPerSecond)
     
 }
 
-function moveEverything(){
+function moveSnake(){
     snake = snake + 5;
     if (snake >= 720) {
         snake = 720;
