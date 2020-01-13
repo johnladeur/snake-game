@@ -3,7 +3,7 @@ var canvasContext;
 var snakeX = 60;
 var snakeY = 200;
 var appleX = 300;
-var appleY = 260;
+var appleY = 280;
 
 window.onload = function() {
   this.console.log("Hello World!");
@@ -13,7 +13,9 @@ window.onload = function() {
   var framesPerSecond = 30;
   setInterval(function() {
     moveSnake();
-    drawEverything();
+    drawCanvas();
+    drawSnake();
+    drawApple();
   }, 1000 / framesPerSecond);
 };
 
@@ -52,14 +54,20 @@ function moveSnake() {
   }
 }
 
-function drawEverything() {
+function drawCanvas() {
   //next line blanks out screen with black
   canvasContext.fillStyle = "black";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height, "black");
+}
+
+function drawSnake(){
   //this is the 'snake' figure
   canvasContext.fillStyle = "green";
   canvasContext.fillRect(snakeX, snakeY, 80, 15);
+}
+function drawApple(){
   //this is the 'apple' figure
   canvasContext.fillStyle = "white";
   canvasContext.fillRect(appleX, appleY, 15, 15);
 }
+
