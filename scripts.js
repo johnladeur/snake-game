@@ -21,20 +21,20 @@ window.onload = function() {
 
 document.onkeydown = function(e) {
   if (e.keyCode == "37") {
-    snakeX = snakeX - 10;
+    snakeX = snakeX - 20;
     console.log("the left key was pressed");
   }
   if (e.keyCode == "38") {
-    snakeY = snakeY - 10;
+    snakeY = snakeY - 20;
 
     console.log("the up arrow was pressed");
   }
   if (e.keyCode == "39") {
-    snakeX = snakeX + 10;
+    snakeX = snakeX + 20;
     console.log("the right key was pressed");
   }
   if (e.keyCode == "40") {
-    snakeY = snakeY + 10;
+    snakeY = snakeY + 20;
     console.log("the down key was pressed");
   }
 };
@@ -49,8 +49,8 @@ function moveSnake() {
   if (snakeY <= 0) {
     snakeY = 0;
   }
-  if (snakeY >= 585) {
-    snakeY = 585;
+  if (snakeY >= 580) {
+    snakeY = 580;
   }
 }
 
@@ -63,11 +63,11 @@ function drawCanvas() {
 function drawSnake(){
   //this is the 'snake' figure
   canvasContext.fillStyle = "green";
-  canvasContext.fillRect(snakeX, snakeY, 80, 15);
+  canvasContext.fillRect(snakeX, snakeY, 80, 20);
 }
 function drawApple(){
   //this is the 'apple' figure
   canvasContext.fillStyle = "white";
-  canvasContext.fillRect(appleX, appleY, 15, 15);
+  canvasContext.fillRect(appleX, appleY, 20, 20);
 }
 
