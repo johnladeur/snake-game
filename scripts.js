@@ -4,6 +4,7 @@ var snakeX = 60;
 var snakeY = 200;
 var appleX = 300;
 var appleY = 280;
+let d;
 
 window.onload = function() {
   this.console.log("Hello World!");
@@ -20,26 +21,31 @@ window.onload = function() {
 };
 
 document.onkeydown = function(e) {
-  if (e.keyCode == "37") {
-    snakeX = snakeX - 20;
+  if (e.keyCode == "37" && d != "RIGHT") {
+    snakeX -= 20;
+    d = "LEFT";
     console.log("the left key was pressed");
   }
-  if (e.keyCode == "38") {
-    snakeY = snakeY - 20;
+  if (e.keyCode == "38" && d != "DOWN") {
+    snakeY -= 20;
+    d = "UP";
 
     console.log("the up arrow was pressed");
   }
-  if (e.keyCode == "39") {
-    snakeX = snakeX + 20;
+  if (e.keyCode == "39" && d != "LEFT") {
+    snakeX += 20;
+    d = "RIGHT"
     console.log("the right key was pressed");
   }
-  if (e.keyCode == "40") {
-    snakeY = snakeY + 20;
+  if (e.keyCode == "40" && d != "UP") {
+    snakeY += 20;
+    d = "DOWN"
     console.log("the down key was pressed");
   }
 };
 
 function moveSnake() {
+
   if (snakeX >= 720) {
     snakeX = 720;
   }
@@ -55,19 +61,16 @@ function moveSnake() {
 }
 
 function drawCanvas() {
-  //next line blanks out screen with black
   canvasContext.fillStyle = "black";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height, "black");
 }
 
 function drawSnake(){
-  //this is the 'snake' figure
   canvasContext.fillStyle = "green";
-  canvasContext.fillRect(snakeX, snakeY, 80, 20);
+  canvasContext.fillRect(snakeX, snakeY, 20, 20);
 }
 function drawApple(){
-  //this is the 'apple' figure
-  canvasContext.fillStyle = "white";
+  canvasContext.fillStyle = "red";
   canvasContext.fillRect(appleX, appleY, 20, 20);
 }
 
