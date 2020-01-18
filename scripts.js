@@ -1,7 +1,13 @@
 var canvas;
 var canvasContext;
-var snakeX = 60;
-var snakeY = 200;
+var snake = [];
+snake[0] = {x: 100, y: 200};
+var initialTailLength = 3;
+
+var i;
+  for (i = 0; i < initialTailLength; i++){
+  snake.push({x: 100, y: 200});
+  }
 var appleX = 300;
 var appleY = 280;
 let d;
@@ -11,7 +17,8 @@ window.onload = function() {
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext("2d");
 
-  var framesPerSecond = 30;
+  var framesPerSecond = 20;
+  
   setInterval(function() {
     moveSnake();
     drawCanvas();
@@ -21,24 +28,33 @@ window.onload = function() {
 };
 
 document.onkeydown = function(e) {
+
+  
+
+
+  
   if (e.keyCode == "37" && d != "RIGHT") {
-    snakeX -= 20;
+    
+    
     d = "LEFT";
     console.log("the left key was pressed");
   }
   if (e.keyCode == "38" && d != "DOWN") {
-    snakeY -= 20;
+    
+    
     d = "UP";
 
     console.log("the up arrow was pressed");
   }
   if (e.keyCode == "39" && d != "LEFT") {
-    snakeX += 20;
+    
+    
     d = "RIGHT"
     console.log("the right key was pressed");
   }
   if (e.keyCode == "40" && d != "UP") {
-    snakeY += 20;
+    
+    
     d = "DOWN"
     console.log("the down key was pressed");
   }
@@ -46,17 +62,29 @@ document.onkeydown = function(e) {
 
 function moveSnake() {
 
-  if (snakeX >= 720) {
-    snakeX = 720;
+  var i;
+  for (i = snake.length -1; i > 0; i--) {
+    snake[i].y = snake[i - 1].y;
+    snake[i].x = snake[i - 1].x;
+  
   }
-  if (snakeX <= 0) {
-    snakeX = 0;
+
+ if (d === "LEFT") snake[0].x -= 20;
+ if (d === "UP") snake[0].y -= 20;
+ if (d === "RIGHT") snake[0].x += 20;
+ if (d === "DOWN") snake[0].y += 20;
+
+  if (snake[0].x >= 780) {
+    snake[0].x = 780;
   }
-  if (snakeY <= 0) {
-    snakeY = 0;
+  if (snake[0].x <= 0) {
+    snake[0].x = 0;
   }
-  if (snakeY >= 580) {
-    snakeY = 580;
+  if (snake[0].y <= 0) {
+    snake[0].y = 0;
+  }
+  if (snake[0].y >= 580) {
+    snake[0].y = 580;
   }
 }
 
@@ -67,8 +95,12 @@ function drawCanvas() {
 
 function drawSnake(){
   canvasContext.fillStyle = "green";
-  canvasContext.fillRect(snakeX, snakeY, 20, 20);
-}
+  var i;
+  for (i = 0; i < snake.length; i++) {
+  canvasContext.fillRect(snake[i].x, snake[i].y, 20, 20);
+  }
+    
+} 
 function drawApple(){
   canvasContext.fillStyle = "red";
   canvasContext.fillRect(appleX, appleY, 20, 20);
