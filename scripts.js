@@ -1,3 +1,5 @@
+const DEBUG = false;
+
 var canvas;
 var canvasContext;
 var snake = [];
@@ -24,8 +26,17 @@ window.onload = function() {
     drawCanvas();
     drawSnake();
     drawApple();
-  }, 1000 / framesPerSecond);
+  }, gameTimeInterval / framesPerSecond);
 };
+
+var gameTimeInterval = 1000;
+
+if (DEBUG === true) {
+  appleY = 200;
+  appleX = 400;
+  gameTimeInterval = 4000;
+
+}
 
 document.onkeydown = function(e) {  
   if (e.keyCode == "37" && d != "RIGHT") {
