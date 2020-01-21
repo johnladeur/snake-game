@@ -27,36 +27,18 @@ window.onload = function() {
   }, 1000 / framesPerSecond);
 };
 
-document.onkeydown = function(e) {
-
-  
-
-
-  
+document.onkeydown = function(e) {  
   if (e.keyCode == "37" && d != "RIGHT") {
-    
-    
     d = "LEFT";
-    console.log("the left key was pressed");
   }
   if (e.keyCode == "38" && d != "DOWN") {
-    
-    
     d = "UP";
-
-    console.log("the up arrow was pressed");
   }
   if (e.keyCode == "39" && d != "LEFT") {
-    
-    
     d = "RIGHT"
-    console.log("the right key was pressed");
   }
   if (e.keyCode == "40" && d != "UP") {
-    
-    
     d = "DOWN"
-    console.log("the down key was pressed");
   }
 };
 
