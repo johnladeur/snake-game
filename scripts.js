@@ -3,13 +3,13 @@ const DEBUG = false;
 var canvas;
 var canvasContext;
 var snake = [];
-snake[0] = {x: 100, y: 200};
+snake[0] = { x: 100, y: 200 };
 var initialTailLength = 3;
 
 var i;
-  for (i = 0; i < initialTailLength; i++){
-  snake.push({x: 100, y: 200});
-  }
+for (i = 0; i < initialTailLength; i++) {
+  snake.push({ x: 100, y: 200 });
+}
 var appleX = 300;
 var appleY = 280;
 let d;
@@ -20,7 +20,7 @@ window.onload = function() {
   canvasContext = canvas.getContext("2d");
 
   var framesPerSecond = 20;
-  
+
   setInterval(function() {
     moveSnake();
     drawCanvas();
@@ -35,10 +35,9 @@ if (DEBUG === true) {
   appleY = 200;
   appleX = 400;
   gameTimeInterval = 4000;
-
 }
 
-document.onkeydown = function(e) {  
+document.onkeydown = function(e) {
   if (e.keyCode == "37" && d != "RIGHT") {
     d = "LEFT";
   }
@@ -46,26 +45,24 @@ document.onkeydown = function(e) {
     d = "UP";
   }
   if (e.keyCode == "39" && d != "LEFT") {
-    d = "RIGHT"
+    d = "RIGHT";
   }
   if (e.keyCode == "40" && d != "UP") {
-    d = "DOWN"
+    d = "DOWN";
   }
 };
 
 function moveSnake() {
-
   var i;
-  for (i = snake.length -1; i > 0; i--) {
+  for (i = snake.length - 1; i > 0; i--) {
     snake[i].y = snake[i - 1].y;
     snake[i].x = snake[i - 1].x;
-  
   }
 
- if (d === "LEFT") snake[0].x -= 20;
- if (d === "UP") snake[0].y -= 20;
- if (d === "RIGHT") snake[0].x += 20;
- if (d === "DOWN") snake[0].y += 20;
+  if (d === "LEFT") snake[0].x -= 20;
+  if (d === "UP") snake[0].y -= 20;
+  if (d === "RIGHT") snake[0].x += 20;
+  if (d === "DOWN") snake[0].y += 20;
 
   if (snake[0].x >= 780) {
     snake[0].x = 780;
@@ -86,16 +83,14 @@ function drawCanvas() {
   canvasContext.fillRect(0, 0, canvas.width, canvas.height, "black");
 }
 
-function drawSnake(){
+function drawSnake() {
   canvasContext.fillStyle = "green";
   var i;
   for (i = 0; i < snake.length; i++) {
-  canvasContext.fillRect(snake[i].x, snake[i].y, 20, 20);
+    canvasContext.fillRect(snake[i].x, snake[i].y, 20, 20);
   }
-    
-} 
-function drawApple(){
+}
+function drawApple() {
   canvasContext.fillStyle = "red";
   canvasContext.fillRect(appleX, appleY, 20, 20);
 }
-
