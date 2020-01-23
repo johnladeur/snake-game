@@ -81,9 +81,10 @@ function moveSnake() {
 function moveApple(){
   var columns = canvas.height/30;
   var rows = canvas.width/40;
+  
   appleX = Math.floor(Math.random() * canvas.width);
-  appleY = Math.floor(Math.random() * canvas.height);
-  } 
+  appleY = Math.floor(Math.random() * canvas.height); 
+}
   
 
 function drawCanvas() {
