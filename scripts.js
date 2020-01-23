@@ -15,11 +15,11 @@ var appleY = 280;
 let d;
 
 window.onload = function() {
-  this.console.log("Hello World!");
+  var framesPerSecond = 20;
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext("2d");
-
-  var framesPerSecond = 20;
+  moveApple();
+  
 
   setInterval(function() {
     moveSnake();
@@ -64,7 +64,7 @@ function moveSnake() {
   if (d === "RIGHT") snake[0].x += 20;
   if (d === "DOWN") snake[0].y += 20;
 
-  if (snake[0].x >= 780) {
+  if (snake[0].x >= canvas.width - 20) {
     snake[0].x = 780;
   }
   if (snake[0].x <= 0) {
@@ -73,10 +73,18 @@ function moveSnake() {
   if (snake[0].y <= 0) {
     snake[0].y = 0;
   }
-  if (snake[0].y >= 580) {
+  if (snake[0].y >= canvas.height -20) {
     snake[0].y = 580;
   }
 }
+
+function moveApple(){
+  var columns = canvas.height/30;
+  var rows = canvas.width/40;
+  appleX = Math.floor(Math.random() * canvas.width);
+  appleY = Math.floor(Math.random() * canvas.height);
+  } 
+  
 
 function drawCanvas() {
   canvasContext.fillStyle = "black";
