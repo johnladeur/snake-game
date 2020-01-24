@@ -79,11 +79,9 @@ function moveSnake() {
 }
 
 function moveApple(){
-  var columns = canvas.height/30;
-  var rows = canvas.width/40;
   
-  appleX = Math.floor(Math.random() * canvas.width);
-  appleY = Math.floor(Math.random() * canvas.height); 
+  appleX = Math.floor(Math.random() * 40) * 20;
+  appleY = Math.floor(Math.random() * 30) * 20; 
 }
   
 
@@ -92,14 +90,16 @@ function drawCanvas() {
   canvasContext.fillRect(0, 0, canvas.width, canvas.height, "black");
 }
 
+function drawApple() {
+  canvasContext.fillStyle = "red";
+  canvasContext.fillRect(appleX, appleY, 20, 20);
+}
+
+
 function drawSnake() {
   canvasContext.fillStyle = "green";
   var i;
   for (i = 0; i < snake.length; i++) {
     canvasContext.fillRect(snake[i].x, snake[i].y, 20, 20);
   }
-}
-function drawApple() {
-  canvasContext.fillStyle = "red";
-  canvasContext.fillRect(appleX, appleY, 20, 20);
 }
