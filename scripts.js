@@ -88,9 +88,9 @@ function moveApple(){
   
 function checkCollision(e){
   for (i = 0; i < snake.length; i++){
-  if (snake[0].x > appleX && snake[0].y > appleY){
+  if (snake[0].x == appleX && snake[0].y == appleY){
     console.log('collision detected')
-    moveApple()
+    moveApple();
   }
   }
 }
