@@ -16,7 +16,6 @@ for (i = 0; i < initialTailLength; i++) {
   snake.push({ x: 100, y: 200 });
 }
 
-
 window.onload = function() {
   
   canvas = document.getElementById("gameCanvas");
@@ -84,8 +83,6 @@ function moveSnake() {
   }
 }
 
-
-
 function moveApple() {
   appleX = Math.floor(Math.random() * 40) * 20;
   appleY = Math.floor(Math.random() * 30) * 20;
@@ -104,8 +101,12 @@ function checkCollision(e) {
       moveApple();
       increaseSnakeLength();
     }
+    if (snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+        console.log('snake collided with itself')
+      }
   }
-}
+  }
+
 
 function increaseSnakeLength(){
   for (i = 0; i < initialTailLength; i++){
