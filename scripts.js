@@ -1,25 +1,27 @@
 const DEBUG = false;
+const  FRAMESPERSECOND = 20;
+const GAMETIMEINTERVAL = 1000;
 
 var canvas;
 var canvasContext;
 var snake = [];
 snake[0] = { x: 100, y: 200 };
 var initialTailLength = 3;
+var appleX;
+var appleY;
+let d;
 
 var i;
 for (i = 0; i < initialTailLength; i++) {
   snake.push({ x: 100, y: 200 });
 }
-var appleX;
-var appleY;
-let d;
+
 
 window.onload = function() {
-  var framesPerSecond = 20;
+  
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext("2d");
   moveApple();
-  
 
   setInterval(function() {
     checkCollision();
@@ -27,16 +29,13 @@ window.onload = function() {
     drawCanvas();
     drawSnake();
     drawApple();
-    
-  }, gameTimeInterval / framesPerSecond);
+  }, GAMETIMEINTERVAL / FRAMESPERSECOND);
 };
-
-var gameTimeInterval = 1000;
 
 if (DEBUG === true) {
   appleY = 200;
   appleX = 400;
-  gameTimeInterval = 4000;
+  GAMETIMEINTERVAL = 4000;
 }
 
 document.onkeydown = function(e) {
@@ -66,32 +65,51 @@ function moveSnake() {
   if (d === "RIGHT") snake[0].x += 20;
   if (d === "DOWN") snake[0].y += 20;
 
-  if (snake[0].x >= canvas.width - 20) {
+  if (snake[0].x >= canvas.width) {
     snake[0].x = 780;
-  }
+    //alert('Snake touched the wall!')
+      //clearInterval(FRAMESPERSECOND)
+    }
   if (snake[0].x <= 0) {
-    snake[0].x = 0;
+    snake[0].x = 0; 
+    //alert('Snake touched the wall!')
   }
-  if (snake[0].y <= 0) {
+  if (snake[0].y <= -20) {
     snake[0].y = 0;
+    //alert('Snake touched the wall!')
   }
-  if (snake[0].y >= canvas.height -20) {
+  if (snake[0].y >= canvas.height) {
     snake[0].y = 580;
+    //alert('Snake touched the wall!')
   }
 }
 
-function moveApple(){
-  
+
+
+function moveApple() {
   appleX = Math.floor(Math.random() * 40) * 20;
-  appleY = Math.floor(Math.random() * 30) * 20; 
-}
-  
-function checkCollision(e){
+  appleY = Math.floor(Math.random() * 30) * 20;
+
   for (i = 0; i < snake.length; i++){
-  if (snake[0].x == appleX && snake[0].y == appleY){
-    console.log('collision detected')
-    moveApple();
+  if (appleX == snake[i].x && appleY == snake[i].y){
+    moveApple()
+  } 
+}
+}
+
+function checkCollision(e) {
+  for (i = 0; i < snake.length; i++) {
+    if (snake[0].x == appleX && snake[0].y == appleY) {
+      console.log("collision detected");
+      moveApple();
+      increaseSnakeLength();
+    }
   }
+}
+
+function increaseSnakeLength(){
+  for (i = 0; i < initialTailLength; i++){
+    snake.push({x: snake[i].x, y: snake[i].y});
   }
 }
 
@@ -104,7 +122,6 @@ function drawApple() {
   canvasContext.fillStyle = "red";
   canvasContext.fillRect(appleX, appleY, 20, 20);
 }
-
 
 function drawSnake() {
   canvasContext.fillStyle = "green";
