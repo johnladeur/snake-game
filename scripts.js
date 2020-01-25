@@ -10,8 +10,8 @@ var i;
 for (i = 0; i < initialTailLength; i++) {
   snake.push({ x: 100, y: 200 });
 }
-var appleX = 300;
-var appleY = 280;
+var appleX;
+var appleY;
 let d;
 
 window.onload = function() {
@@ -22,10 +22,12 @@ window.onload = function() {
   
 
   setInterval(function() {
+    checkCollision();
     moveSnake();
     drawCanvas();
     drawSnake();
     drawApple();
+    
   }, gameTimeInterval / framesPerSecond);
 };
 
@@ -84,6 +86,14 @@ function moveApple(){
   appleY = Math.floor(Math.random() * 30) * 20; 
 }
   
+function checkCollision(e){
+  for (i = 0; i < snake.length; i++){
+  if (snake[0].x > appleX && snake[0].y > appleY){
+    console.log('collision detected')
+    moveApple()
+  }
+  }
+}
 
 function drawCanvas() {
   canvasContext.fillStyle = "black";
