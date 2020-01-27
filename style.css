@@ -1,2 +1,7 @@
-h1 { font: bold
+.header {
+  font: bold;
+  text-align: center;
+}
+.gameCanvas {
+  margin-left: 370px;
 }

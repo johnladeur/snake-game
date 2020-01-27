@@ -69,23 +69,22 @@ function moveSnake() {
   if (snake[0].x >= canvas.width) {
     snake[0].x = 780;
     window.location.reload();
-    alert('Game over. Try Again!')
-    
+    alert("Game over. Try again!");
   }
   if (snake[0].x <= -20) {
     snake[0].x = 0;
     window.location.reload();
-    alert('Game over. Try again!')
+    alert("Game over. Try again!");
   }
   if (snake[0].y <= -20) {
     snake[0].y = 0;
     window.location.reload();
-    alert('Game over. Try again!')
+    alert("Game over. Try again!");
   }
   if (snake[0].y >= canvas.height) {
     snake[0].y = 580;
     window.location.reload();
-    alert('Game over. Try again!')
+    alert("Game over. Try again!");
   }
 }
 
@@ -120,8 +119,8 @@ function checkSnakeContact() {
     ) {
       console.log("snake collided with itself");
       window.location.reload();
-      alert('Game over. Try again!')
-    } 
+      alert("Game over. Try again!");
+    }
   }
 }
 
