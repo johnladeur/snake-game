@@ -1,5 +1,5 @@
 const DEBUG = false;
-const  FRAMESPERSECOND = 20;
+const FRAMESPERSECOND = 20;
 const GAMETIMEINTERVAL = 1000;
 
 var canvas;
@@ -10,6 +10,7 @@ var initialTailLength = 3;
 var appleX;
 var appleY;
 let d;
+let score = 0;
 
 var i;
 for (i = 0; i < initialTailLength; i++) {
@@ -17,7 +18,6 @@ for (i = 0; i < initialTailLength; i++) {
 }
 
 window.onload = function() {
-  
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext("2d");
   moveApple();
@@ -28,6 +28,8 @@ window.onload = function() {
     drawCanvas();
     drawSnake();
     drawApple();
+    drawScoring();
+    checkSnakeContact();
   }, GAMETIMEINTERVAL / FRAMESPERSECOND);
 };
 
@@ -66,20 +68,24 @@ function moveSnake() {
 
   if (snake[0].x >= canvas.width) {
     snake[0].x = 780;
-    //alert('Snake touched the wall!')
-      //clearInterval(FRAMESPERSECOND)
-    }
-  if (snake[0].x <= 0) {
-    snake[0].x = 0; 
-    //alert('Snake touched the wall!')
+    window.location.reload();
+    alert('Game over. Try Again!')
+    
+  }
+  if (snake[0].x <= -20) {
+    snake[0].x = 0;
+    window.location.reload();
+    alert('Game over. Try again!')
   }
   if (snake[0].y <= -20) {
     snake[0].y = 0;
-    //alert('Snake touched the wall!')
+    window.location.reload();
+    alert('Game over. Try again!')
   }
   if (snake[0].y >= canvas.height) {
     snake[0].y = 580;
-    //alert('Snake touched the wall!')
+    window.location.reload();
+    alert('Game over. Try again!')
   }
 }
 
@@ -87,11 +93,11 @@ function moveApple() {
   appleX = Math.floor(Math.random() * 40) * 20;
   appleY = Math.floor(Math.random() * 30) * 20;
 
-  for (i = 0; i < snake.length; i++){
-  if (appleX == snake[i].x && appleY == snake[i].y){
-    moveApple()
-  } 
-}
+  for (i = 0; i < snake.length; i++) {
+    if (appleX == snake[i].x && appleY == snake[i].y) {
+      moveApple();
+    }
+  }
 }
 
 function checkCollision(e) {
@@ -100,23 +106,40 @@ function checkCollision(e) {
       console.log("collision detected");
       moveApple();
       increaseSnakeLength();
+      score++;
     }
-    if (snake[0].x == snake[i].x && snake[0].y == snake[i].y){
-        console.log('snake collided with itself')
-      }
   }
+}
+
+function checkSnakeContact() {
+  for (i = snake.length - 1; i > 0; i--) {
+    if (
+      snake.length >= 5 &&
+      snake[0].x == snake[i].x &&
+      snake[0].y == snake[i].y
+    ) {
+      console.log("snake collided with itself");
+      window.location.reload();
+      alert('Game over. Try again!')
+    } 
   }
+}
 
-
-function increaseSnakeLength(){
-  for (i = 0; i < initialTailLength; i++){
-    snake.push({x: snake[i].x, y: snake[i].y});
+function increaseSnakeLength() {
+  for (i = 0; i < initialTailLength; i++) {
+    snake.push({ x: snake[i].x, y: snake[i].y });
   }
 }
 
 function drawCanvas() {
   canvasContext.fillStyle = "black";
   canvasContext.fillRect(0, 0, canvas.width, canvas.height, "black");
+}
+
+function drawScoring() {
+  canvasContext.fillStyle = "white";
+  canvasContext.fillText(score, 35, 50);
+  canvasContext.font = "30px Arial";
 }
 
 function drawApple() {
