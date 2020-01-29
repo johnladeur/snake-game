@@ -126,8 +126,6 @@ function checkCollision(e) {
 if (checkIfContact == false){
   function avoidCheckingCollision(){}
     }
-    
-
 
 function checkSnakeContact() {
   
