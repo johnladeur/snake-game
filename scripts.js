@@ -68,34 +68,30 @@ function moveSnake() {
   if (direction === "DOWN") snake[0].y += 20;
 
   if (snake[0].x >= canvas.width) {
-    
     snake[0].x = 780;
     window.location.reload();
     alert("Game over. Try again!");
     checkIfContact = false;
   }
   if (snake[0].x <= -20) {
-    
     snake[0].x = 0;
     window.location.reload();
     alert("Game over. Try again!");
     checkIfContact = false;
   }
   if (snake[0].y <= -20) {
-    
     snake[0].y = 0;
     window.location.reload();
     alert("Game over. Try again!");
     checkIfContact = false;
   }
   if (snake[0].y >= canvas.height) {
-    
     snake[0].y = 580;
     window.location.reload();
     alert("Game over. Try again!");
     checkIfContact = false;
   }
-  if (checkIfContact == false){
+  if (checkIfContact == false) {
     avoidCheckingCollision();
   }
 }
@@ -119,16 +115,14 @@ function checkCollision(e) {
       increaseSnakeLength();
       score++;
     }
-   
   }
 }
 
-if (checkIfContact == false){
-  function avoidCheckingCollision(){}
-    }
+if (checkIfContact == false) {
+  function avoidCheckingCollision() {}
+}
 
 function checkSnakeContact() {
-  
   for (i = snake.length - 1; i > 0; i--) {
     if (
       snake.length >= 5 &&
