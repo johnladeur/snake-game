@@ -129,7 +129,6 @@ function checkSnakeContact() {
       snake[0].x == snake[i].x &&
       snake[0].y == snake[i].y
     ) {
-      console.log("snake collided with itself");
       window.location.reload();
       alert("Game over. Try again!");
     }
