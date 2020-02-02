@@ -64,16 +64,16 @@ if (DEBUG === true) {
 }
 
 document.onkeydown = function(e) {
-  if (e.keyCode == "37" && snake.direction != DIRECTIONS.RIGHT) {
+  if (e.keyCode == "37" && snake.direction != DIRECTIONS.RIGHT && snake.direction != "RIGHT") {
     snake.direction = "LEFT";
   }
-  if (e.keyCode == "38" && snake.direction != DIRECTIONS.UP) {
+  if (e.keyCode == "38" && snake.direction != DIRECTIONS.UP && snake.direction != "DOWN") {
     snake.direction = "UP";
   }
-  if (e.keyCode == "39" && snake.direction != DIRECTIONS.RIGHT) {
+  if (e.keyCode == "39" && snake.direction != DIRECTIONS.RIGHT && snake.direction != "LEFT") {
     snake.direction = "RIGHT";
   }
-  if (e.keyCode == "40" && snake.direction != DIRECTIONS.DOWN) {
+  if (e.keyCode == "40" && snake.direction != DIRECTIONS.DOWN && snake.direction != "UP") {
     snake.direction = "DOWN";
   }
 };
@@ -106,6 +106,12 @@ function isSnakeCollidingWithBoundary() {
 function moveApple() {
   apple.x = Math.floor(Math.random() * 40) * 20;
   apple.y = Math.floor(Math.random() * 30) * 20;
+
+  for (i = 0; i < snake.length; i++) {
+    if (appleX == snake[i].x && appleY == snake[i].y) {
+      moveApple();
+    }
+  }
 }
 
 function isSnakeEatingApple(e) {
