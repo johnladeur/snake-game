@@ -1,143 +1,139 @@
 const DEBUG = false;
 const FRAMESPERSECOND = 20;
-const GAMETIMEINTERVAL = 1000;
-
+const GAMETIMEINTERVAL = DEBUG ? 4000 : 1000;
+const DIRECTIONS = {
+  UP: "UP",
+  DOWN: "DOWN",
+  LEFT: "LEFT",
+  RIGHT: "RIGHT"
+};
 var canvas;
 var canvasContext;
-var snake = [];
-snake[0] = { x: 100, y: 200 };
-var initialTailLength = 3;
-var appleX;
-var appleY;
+var snake = {
+  body: [{ x: 100, y: 200 }],
+  direction: undefined
+};
+const initialTailLength = 3;
+let apple = {
+  x: 200,
+  y: 400
+};
 let checkIfContact = true;
-let direction;
 let score = 0;
 
-var i;
-for (i = 0; i < initialTailLength; i++) {
-  snake.push({ x: 100, y: 200 });
+for (let i = 0; i < initialTailLength; i++) {
+  snake.body.push({ x: 100, y: 200 });
 }
 
 window.onload = function() {
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext("2d");
-  moveApple();
+  if (DEBUG === false) {
+    moveApple();
+  }
 
   setInterval(function() {
-    checkCollision();
-    moveSnake();
-    drawCanvas();
-    drawSnake();
-    drawApple();
-    drawScoring();
-    checkSnakeContact();
-  }, GAMETIMEINTERVAL / FRAMESPERSECOND);
-};
-
-if (DEBUG === true) {
-  appleY = 200;
-  appleX = 400;
-  GAMETIMEINTERVAL = 4000;
-}
-
-document.onkeydown = function(e) {
-  if (e.keyCode == "37" && direction != "RIGHT") {
-    direction = "LEFT";
-  }
-  if (e.keyCode == "38" && direction != "DOWN") {
-    direction = "UP";
-  }
-  if (e.keyCode == "39" && direction != "LEFT") {
-    direction = "RIGHT";
-  }
-  if (e.keyCode == "40" && direction != "UP") {
-    direction = "DOWN";
-  }
-};
-
-function moveSnake() {
-  var i;
-  for (i = snake.length - 1; i > 0; i--) {
-    snake[i].y = snake[i - 1].y;
-    snake[i].x = snake[i - 1].x;
-  }
-
-  if (direction === "LEFT") snake[0].x -= 20;
-  if (direction === "UP") snake[0].y -= 20;
-  if (direction === "RIGHT") snake[0].x += 20;
-  if (direction === "DOWN") snake[0].y += 20;
-
-  if (snake[0].x >= canvas.width) {
-    snake[0].x = 780;
-    window.location.reload();
-    alert("Game over. Try again!");
-    checkIfContact = false;
-  }
-  if (snake[0].x <= -20) {
-    snake[0].x = 0;
-    window.location.reload();
-    alert("Game over. Try again!");
-    checkIfContact = false;
-  }
-  if (snake[0].y <= -20) {
-    snake[0].y = 0;
-    window.location.reload();
-    alert("Game over. Try again!");
-    checkIfContact = false;
-  }
-  if (snake[0].y >= canvas.height) {
-    snake[0].y = 580;
-    window.location.reload();
-    alert("Game over. Try again!");
-    checkIfContact = false;
-  }
-  if (checkIfContact == false) {
-    avoidCheckingCollision();
-  }
-}
-
-function moveApple() {
-  appleX = Math.floor(Math.random() * 40) * 20;
-  appleY = Math.floor(Math.random() * 30) * 20;
-
-  for (i = 0; i < snake.length; i++) {
-    if (appleX == snake[i].x && appleY == snake[i].y) {
-      moveApple();
-    }
-  }
-}
-
-function checkCollision(e) {
-  for (i = 0; i < snake.length; i++) {
-    if (snake[0].x == appleX && snake[0].y == appleY) {
+    if (isSnakeEatingApple()) {
       console.log("collision detected");
       moveApple();
       increaseSnakeLength();
       score++;
     }
+    moveSnake();
+    if (isSnakeCollidingWithBoundary()) {
+      alert("Game over. Try again!");
+      window.location.reload();
+      checkIfContact = false;
+    }
+    drawCanvas();
+    drawApple();
+    drawSnake();
+    drawScoring();
+
+    if (isSnakeEatingItself() === true) {
+      alert("Gamer over. Try again!");
+      window.location.reload();
+    }
+  }, GAMETIMEINTERVAL / FRAMESPERSECOND);
+};
+
+if (DEBUG === true) {
+  apple.y = 200;
+  apple.x = 400;
+  GAMETIMEINTERVAL = 4000;
+}
+
+document.onkeydown = function(e) {
+  if (e.keyCode == "37" && snake.direction != DIRECTIONS.RIGHT) {
+    snake.direction = "LEFT";
+  }
+  if (e.keyCode == "38" && snake.direction != DIRECTIONS.UP) {
+    snake.direction = "UP";
+  }
+  if (e.keyCode == "39" && snake.direction != DIRECTIONS.RIGHT) {
+    snake.direction = "RIGHT";
+  }
+  if (e.keyCode == "40" && snake.direction != DIRECTIONS.DOWN) {
+    snake.direction = "DOWN";
+  }
+};
+
+function moveSnake() {
+  for (let i = snake.body.length - 1; i > 0; i--) {
+    snake.body[i].y = snake.body[i - 1].y;
+    snake.body[i].x = snake.body[i - 1].x;
+  }
+
+  if (snake.direction === DIRECTIONS.LEFT) snake.body[0].x -= 20;
+  if (snake.direction === DIRECTIONS.UP) snake.body[0].y -= 20;
+  if (snake.direction === DIRECTIONS.RIGHT) snake.body[0].x += 20;
+  if (snake.direction === DIRECTIONS.DOWN) snake.body[0].y += 20;
+
+  if (checkIfContact == false) {
+    avoidCheckingCollision();
   }
 }
 
-if (checkIfContact == false) {
-  function avoidCheckingCollision() {}
+function isSnakeCollidingWithBoundary() {
+  return (
+    snake.body[0].x >= canvas.width ||
+    snake.body[0].x <= -20 ||
+    snake.body[0].y <= -20 ||
+    snake.body[0].y >= canvas.height
+  );
 }
 
-function checkSnakeContact() {
-  for (i = snake.length - 1; i > 0; i--) {
-    if (
-      snake.length >= 5 &&
-      snake[0].x == snake[i].x &&
-      snake[0].y == snake[i].y
-    ) {
-      window.location.reload();
-      alert("Game over. Try again!");
+function moveApple() {
+  apple.x = Math.floor(Math.random() * 40) * 20;
+  apple.y = Math.floor(Math.random() * 30) * 20;
+}
+
+function isSnakeEatingApple(e) {
+  for (i = 0; i < snake.body.length; i++) {
+    if (snake.body[0].x == apple.x && snake.body[0].y == apple.y) {
+      return true;
     }
   }
+
+  return false;
+}
+
+function isSnakeEatingItself() {
+  for (i = snake.body.length - 1; i > 0; i--) {
+    if (
+      snake.body.length >= 5 &&
+      snake.body[0].x == snake.body[i].x &&
+      snake.body[0].y == snake.body[i].y
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function increaseSnakeLength() {
   for (i = 0; i < initialTailLength; i++) {
-    snake.push({ x: snake[i].x, y: snake[i].y });
+    snake.body.push({ x: snake.body[i].x, y: snake.body[i].y });
   }
 }
 
@@ -154,13 +150,12 @@ function drawScoring() {
 
 function drawApple() {
   canvasContext.fillStyle = "red";
-  canvasContext.fillRect(appleX, appleY, 20, 20);
+  canvasContext.fillRect(apple.x, apple.y, 20, 20);
 }
 
 function drawSnake() {
   canvasContext.fillStyle = "green";
-  var i;
-  for (i = 0; i < snake.length; i++) {
-    canvasContext.fillRect(snake[i].x, snake[i].y, 20, 20);
+  for (let i = 0; i < snake.body.length; i++) {
+    canvasContext.fillRect(snake.body[i].x, snake.body[i].y, 20, 20);
   }
 }
