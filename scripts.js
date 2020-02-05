@@ -88,18 +88,18 @@ function moveSnake() {
   if (snake.direction === DIRECTIONS.UP) snake.body[0].y -= 20;
   if (snake.direction === DIRECTIONS.RIGHT) snake.body[0].x += 20;
   if (snake.direction === DIRECTIONS.DOWN) snake.body[0].y += 20;
-
-  if (checkIfContact == false) {
-    avoidCheckingCollision();
-  }
 }
 
 function isSnakeCollidingWithBoundary() {
+  if (checkIfContact == false) {
+    avoidCheckingCollision();
+  }
   return (
     snake.body[0].x >= canvas.width ||
     snake.body[0].x <= -20 ||
     snake.body[0].y <= -20 ||
     snake.body[0].y >= canvas.height
+  
   );
 }
 
