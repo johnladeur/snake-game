@@ -18,7 +18,7 @@ let apple = {
   x: 200,
   y: 400
 };
-let checkIfContact = true;
+//let checkIfContact = true;
 let score = 0;
 
 for (let i = 0; i < initialTailLength; i++) {
@@ -42,8 +42,9 @@ window.onload = function() {
     moveSnake();
     if (isSnakeCollidingWithBoundary()) {
       alert("Game over. Try again!");
+      clearInterval(GAMETIMEINTERVAL)
       window.location.reload();
-      checkIfContact = false;
+     // checkIfContact = false;
     }
     drawCanvas();
     drawApple();
@@ -52,6 +53,7 @@ window.onload = function() {
 
     if (isSnakeEatingItself() === true) {
       alert("Gamer over. Try again!");
+      clearInterval(GAMETIMEINTERVAL)
       window.location.reload();
     }
   }, GAMETIMEINTERVAL / FRAMESPERSECOND);
@@ -91,16 +93,19 @@ function moveSnake() {
 }
 
 function isSnakeCollidingWithBoundary() {
-  if (checkIfContact == false) {
-    avoidCheckingCollision();
-  }
-  return (
+  //if (checkIfContact == false) {
+    //avoidCheckingCollision();
+  //}
+ 
+ if (
     snake.body[0].x >= canvas.width ||
     snake.body[0].x <= -20 ||
     snake.body[0].y <= -20 ||
     snake.body[0].y >= canvas.height
-  
-  );
+  ){console.log('boundary hit!') 
+    clearInterval(GAMETIMEINTERVAL);
+    
+  }
 }
 
 function moveApple() {
