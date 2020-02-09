@@ -18,7 +18,6 @@ let apple = {
   x: 200,
   y: 400
 };
-//let checkIfContact = true;
 let score = 0;
 
 for (let i = 0; i < initialTailLength; i++) {
@@ -42,7 +41,7 @@ window.onload = function() {
     moveSnake();
     if (isSnakeCollidingWithBoundary()) {
       alert("Game over. Try again!");
-      clearInterval(initiateGame)
+      clearInterval(initiateGame);
       window.location.reload();
     }
     drawCanvas();
@@ -52,7 +51,7 @@ window.onload = function() {
 
     if (isSnakeEatingItself() === true) {
       alert("Gamer over. Try again!");
-      clearInterval(initiateGame)
+      clearInterval(initiateGame);
       window.location.reload();
     }
   }, GAMETIMEINTERVAL / FRAMESPERSECOND);
@@ -65,16 +64,32 @@ if (DEBUG === true) {
 }
 
 document.onkeydown = function(e) {
-  if (e.keyCode == "37" && snake.direction != DIRECTIONS.RIGHT && snake.direction != "RIGHT") {
+  if (
+    e.keyCode == "37" &&
+    snake.direction != DIRECTIONS.RIGHT &&
+    snake.direction != "RIGHT"
+  ) {
     snake.direction = "LEFT";
   }
-  if (e.keyCode == "38" && snake.direction != DIRECTIONS.UP && snake.direction != "DOWN") {
+  if (
+    e.keyCode == "38" &&
+    snake.direction != DIRECTIONS.UP &&
+    snake.direction != "DOWN"
+  ) {
     snake.direction = "UP";
   }
-  if (e.keyCode == "39" && snake.direction != DIRECTIONS.RIGHT && snake.direction != "LEFT") {
+  if (
+    e.keyCode == "39" &&
+    snake.direction != DIRECTIONS.RIGHT &&
+    snake.direction != "LEFT"
+  ) {
     snake.direction = "RIGHT";
   }
-  if (e.keyCode == "40" && snake.direction != DIRECTIONS.DOWN && snake.direction != "UP") {
+  if (
+    e.keyCode == "40" &&
+    snake.direction != DIRECTIONS.DOWN &&
+    snake.direction != "UP"
+  ) {
     snake.direction = "DOWN";
   }
 };
@@ -92,13 +107,12 @@ function moveSnake() {
 }
 
 function isSnakeCollidingWithBoundary() {
- 
- return (
+  return (
     snake.body[0].x >= canvas.width ||
     snake.body[0].x <= -20 ||
     snake.body[0].y <= -20 ||
     snake.body[0].y >= canvas.height
-  )
+  );
 }
 
 function moveApple() {
